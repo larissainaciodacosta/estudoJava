@@ -1,14 +1,14 @@
 package br.com.treinar.conta;
 
-public abstract class Conta {
+import br.com.treinar.conta.tipo.IProduto;
+
+public abstract class Conta implements IProduto {
 
 	private double saldo;
 	private String cliente;
 	private int numero;
 
-	public void depositar(double valor) {
-		saldo += valor;
-	}
+	public abstract void depositar(double valor);
 
 	public void sacar(double valor) {
 		saldo -= valor;

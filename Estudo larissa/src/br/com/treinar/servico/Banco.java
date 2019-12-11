@@ -11,6 +11,7 @@ public class Banco {
 
 	private Conta[] contas;
 	private Scanner teclado;
+	private int index;
 	
 	public Banco(int quantidadeContas) {
 		contas = new Conta[quantidadeContas];
@@ -66,7 +67,6 @@ public class Banco {
 	
 	
 	public void abrir() {
-		int index = 0;
 		int opcao = 0;
 		String menu = "Digite:\n\t0 - Sair\n\t1 - Criar conta\n\t2 - Depositar\n\t3 - Sacar\n\t4 - Exibir Saldo\n=> ";
 		
