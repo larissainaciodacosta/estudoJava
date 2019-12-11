@@ -8,8 +8,20 @@ import br.com.treinar.conta.tipo.ContaPoupanca;
 import br.com.treinar.conta.tipo.ContaSalario;
 
 public class Banco {
+
+	private Conta[] contas;
+	private Scanner teclado;
 	
-	private Scanner teclado = new Scanner(System.in);
+	public Banco(int quantidadeContas) {
+		contas = new Conta[quantidadeContas];
+	}
+	
+	public Banco() {
+		teclado = new Scanner(System.in);
+		System.out.print("Informe a quantidade de contas o banco possui: ");
+		int quantidade = teclado.nextInt();
+		contas = new Conta[quantidade];
+	}
 
 	private void criarConta(Conta conta) {
 		System.out.print("Infome o número da conta: ");
@@ -55,9 +67,8 @@ public class Banco {
 	
 	public void abrir() {
 		int index = 0;
-		Conta[] contas = new Conta[5];
 		int opcao = 0;
-		String menu = "Digite:\n\t0 - Sair\n\t1 - Criar conta\n\t2 - Depositar\n\t3 - Sacar\n=> ";
+		String menu = "Digite:\n\t0 - Sair\n\t1 - Criar conta\n\t2 - Depositar\n\t3 - Sacar\n\t4 - Exibir Saldo\n=> ";
 		
 		do {
 			System.out.print(menu);
@@ -67,10 +78,13 @@ public class Banco {
 				contas[index++] = criarConta();
 				break;
 			case 2:
-				System.out.println("DEPOSITAR");
+				depositar();
 				break;
 			case 3:
-				System.out.println("SACAR");
+				sacar();
+				break;
+			case 4:
+				exibirSaldo();
 				break;
 			case 0:
 				System.out.println("SAIR");
@@ -80,6 +94,50 @@ public class Banco {
 				break;
 			}
 		} while (opcao != 0);
+	}
+
+	private void exibirSaldo() {
+		Conta c = recuperarConta("Infome o número da conta que deseja exibir o saldo: ");
+		if (c != null) {
+			System.out.println(c.getSaldo());
+		} else {
+			System.out.println("Conta inexistente!");
+		}
+	}
+
+	private void sacar() {
+		System.out.print("Infome o valor do saque: ");
+		double valorSaque = teclado.nextDouble();
+		Conta c = recuperarConta("Infome o número da conta que deseja sacar: ");
+		if (c != null) {
+			c.sacar(valorSaque);
+		} else {
+			System.out.println("Conta inexistente!");
+		}
+	}
+
+	private void depositar() {
+		System.out.print("Infome o valor do depósito: ");
+		double valorDeposito = teclado.nextDouble();
+		Conta c = recuperarConta("Infome o número da conta que deseja depositar: ");
+		if (c != null) {
+			c.depositar(valorDeposito);
+		} else {
+			System.out.println("Conta inexistente!");
+		}
+	}
+
+	private Conta recuperarConta(String mensagem) {
+		System.out.print(mensagem);
+		int numeroConta = teclado.nextInt();
+		Conta c = null;
+		for (int i = 0; i < contas.length; i++) {
+			if (contas[i] != null && contas[i].getNumero() == numeroConta) {
+				c = contas[i];
+				break;
+			}
+		}
+		return c;
 	}
 
 }
