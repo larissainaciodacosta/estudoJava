@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import br.com.treinar.conta.Conta;
+import br.com.treinar.conta.SaldoInsuficienteException;
 import br.com.treinar.conta.tipo.ContaCorrente;
 import br.com.treinar.conta.tipo.ContaPoupanca;
 import br.com.treinar.conta.tipo.ContaSalario;
@@ -105,7 +106,14 @@ public class Banco {
 		double valorSaque = teclado.nextDouble();
 		Conta c = recuperarConta("Infome o número da conta que deseja sacar: ");
 		if (c != null) {
-			c.sacar(valorSaque);
+			try {
+				c.sacar(valorSaque);
+				System.out.println("Saque efetuado com sucesso!");
+			} catch (SaldoInsuficienteException e) {
+				System.out.println("Saldo Insuficiente, seu saldo atual é: " + e.getSaldoAtual());
+			} finally {
+				System.out.println("Finalização do saque");
+			}
 		} else {
 			System.out.println("Conta inexistente!");
 		}
@@ -126,7 +134,7 @@ public class Banco {
 		System.out.println(mensagem);
 		System.out.println("\nContas: ");
 		contas.forEach(System.out::println);
-		System.out.println("=> ");
+		System.out.print("=> ");
 		int numeroConta = teclado.nextInt();
 		return contas.stream().filter(c -> c.getNumero() == numeroConta).findFirst().orElse(null);
 	}

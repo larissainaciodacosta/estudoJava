@@ -41,7 +41,11 @@ public abstract class Conta implements IProduto {
 	public abstract void depositar(double valor);
 
 	public void sacar(double valor) {
-		saldo -= valor;
+		if (saldo >= valor) {
+			saldo -= valor;
+		} else {
+			throw new SaldoInsuficienteException(saldo);
+		}
 	}
 
 	public double getSaldo() {
