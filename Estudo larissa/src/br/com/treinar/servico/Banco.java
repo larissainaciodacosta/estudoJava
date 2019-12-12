@@ -123,7 +123,10 @@ public class Banco {
 	}
 
 	private Conta recuperarConta(String mensagem) {
-		System.out.print(mensagem);
+		System.out.println(mensagem);
+		System.out.println("\nContas: ");
+		contas.forEach(System.out::println);
+		System.out.println("=> ");
 		int numeroConta = teclado.nextInt();
 		return contas.stream().filter(c -> c.getNumero() == numeroConta).findFirst().orElse(null);
 	}

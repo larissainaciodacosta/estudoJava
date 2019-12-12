@@ -67,5 +67,10 @@ public abstract class Conta implements IProduto {
 	public void setNumero(int numero) {
 		this.numero = numero;
 	}
+	
+	@Override
+	public String toString() {
+		return "Numero: " + numero;
+	}
 
 }
