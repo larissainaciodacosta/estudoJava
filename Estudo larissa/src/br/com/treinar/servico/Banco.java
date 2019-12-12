@@ -1,5 +1,7 @@
 package br.com.treinar.servico;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import br.com.treinar.conta.Conta;
@@ -9,19 +11,12 @@ import br.com.treinar.conta.tipo.ContaSalario;
 
 public class Banco {
 
-	private Conta[] contas;
+	private List<Conta> contas;
 	private Scanner teclado;
-	private int index;
-	
-	public Banco(int quantidadeContas) {
-		contas = new Conta[quantidadeContas];
-	}
 	
 	public Banco() {
 		teclado = new Scanner(System.in);
-		System.out.print("Informe a quantidade de contas o banco possui: ");
-		int quantidade = teclado.nextInt();
-		contas = new Conta[quantidade];
+		contas = new ArrayList<>();
 	}
 
 	private void criarConta(Conta conta) {
@@ -75,7 +70,7 @@ public class Banco {
 			opcao = teclado.nextInt();
 			switch (opcao) {
 			case 1:
-				contas[index++] = criarConta();
+				contas.add(criarConta());
 				break;
 			case 2:
 				depositar();
@@ -130,14 +125,7 @@ public class Banco {
 	private Conta recuperarConta(String mensagem) {
 		System.out.print(mensagem);
 		int numeroConta = teclado.nextInt();
-		Conta c = null;
-		for (int i = 0; i < contas.length; i++) {
-			if (contas[i] != null && contas[i].getNumero() == numeroConta) {
-				c = contas[i];
-				break;
-			}
-		}
-		return c;
+		return contas.stream().filter(c -> c.getNumero() == numeroConta).findFirst().orElse(null);
 	}
 
 }
